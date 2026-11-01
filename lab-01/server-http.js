@@ -7,11 +7,16 @@ function sendJson(response, statusCode, data) {
   response.end(JSON.stringify(data));
 }
 
+function sendText(response, statusCode, message) {
+  response.writeHead(statusCode, { "Content-Type": "text/plain; charset=utf-8" });
+  response.end(message);
+}
+
 const server = http.createServer((request, response) => {
   const url = new URL(request.url, `http://${request.headers.host || "localhost"}`);
 
   if (request.method !== "GET") {
-    return sendJson(response, 404, { error: "404 - Page Not Found" });
+    return sendText(response, 404, "404 - Page Not Found");
   }
 
   if (url.pathname === "/") {
@@ -29,7 +34,7 @@ const server = http.createServer((request, response) => {
     return sendJson(response, 200, { currentDateTime: new Date().toISOString() });
   }
 
-  return sendJson(response, 404, { error: "404 - Page Not Found" });
+  return sendText(response, 404, "404 - Page Not Found");
 });
 
 server.listen(PORT, () => {

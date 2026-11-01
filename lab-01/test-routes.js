@@ -44,6 +44,10 @@ server.stdout.on("data", async (data) => {
       throw new Error("One or more routes returned an unexpected HTTP status.");
     }
 
+    if (missing.body !== "404 - Page Not Found") {
+      throw new Error("The 404 route did not return the expected plain-text message.");
+    }
+
     console.log(`All ${serverFile} route checks passed: /, /about, /time, and 404.`);
     stop(0);
   } catch (error) {

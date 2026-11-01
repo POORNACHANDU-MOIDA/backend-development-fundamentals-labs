@@ -23,7 +23,7 @@ app.get("/time", (request, response) => {
 
 // Handle every unknown route.
 app.use((request, response) => {
-  response.status(404).json({ error: "404 - Page Not Found" });
+  response.status(404).send("404 - Page Not Found");
 });
 
 app.listen(PORT, "0.0.0.0", () => {
