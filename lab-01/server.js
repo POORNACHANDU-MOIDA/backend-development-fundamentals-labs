@@ -5,14 +5,14 @@ const PORT = Number(process.env.PORT) || 3000;
 
 // GET /
 app.get("/", (request, response) => {
-  response.status(200).json({ message: "Welcome to my Lab 1 server!" });
+  response.status(200).send("Welcome to my Lab 1 server!");
 });
 
 // GET /about
 app.get("/about", (request, response) => {
   response.status(200).json({
     name: "M.POORNA CHANDU",
-    registrationNumber: "252U1R9099"
+    section: "CSE-GEN AI -2B"
   });
 });
 

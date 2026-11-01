@@ -4,6 +4,7 @@ const path = require("path");
 
 const PORT = 3101;
 const serverFile = process.argv[2] || "server.js";
+const isHttpServer = serverFile === "server-http.js";
 const serverPath = path.join(__dirname, serverFile);
 const server = spawn(process.execPath, [serverPath], {
   env: { ...process.env, PORT: String(PORT) },
@@ -36,6 +37,17 @@ server.stdout.on("data", async (data) => {
 
   try {
     const home = await request("/");
+
+    if (isHttpServer) {
+      if (home.statusCode !== 200 || home.body !== "Hello") {
+        throw new Error("The basic HTTP server did not return the expected Hello response.");
+      }
+
+      console.log("Basic HTTP server check passed: / returned Hello with 200.");
+      stop(0);
+      return;
+    }
+
     const about = await request("/about");
     const time = await request("/time");
     const missing = await request("/does-not-exist");
@@ -46,6 +58,15 @@ server.stdout.on("data", async (data) => {
 
     if (missing.body !== "404 - Page Not Found") {
       throw new Error("The 404 route did not return the expected plain-text message.");
+    }
+
+    if (home.body !== "Welcome to my Lab 1 server!") {
+      throw new Error("The home route did not return the expected welcome text.");
+    }
+
+    const aboutData = JSON.parse(about.body);
+    if (aboutData.name !== "M.POORNA CHANDU" || aboutData.section !== "CSE-GEN AI -2B") {
+      throw new Error("The about route did not return the expected name and section.");
     }
 
     console.log(`All ${serverFile} route checks passed: /, /about, /time, and 404.`);

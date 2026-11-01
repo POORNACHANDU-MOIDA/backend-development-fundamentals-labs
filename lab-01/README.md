@@ -2,6 +2,7 @@
 
 **Student:** M.POORNA CHANDU  
 **Registration Number:** 252U1R9099  
+**Section:** CSE-GEN AI -2B  
 **Course:** Backend Development Fundamentals
 
 ## Live deployment
@@ -12,7 +13,7 @@ The application is deployed on Render and is publicly accessible at:
 
 ## Project description
 
-This Lab 1 project demonstrates two simple web servers: one with Node.js's built-in `http` module and one with Express.js. The Express server is used for local development and Render deployment. It uses Render's `PORT` environment variable when one is provided, and port 3000 locally.
+This Lab 1 project demonstrates two separate web servers. `server-http.js` is the basic Node.js server created with `http.createServer`; it returns `Hello`. `server.js` is the Express server used for the required routes and Render deployment. The Express server uses Render's `PORT` environment variable when one is provided, and port 3000 locally.
 
 ## Technologies used
 
@@ -54,16 +55,16 @@ npm test
 npm run test:http
 ```
 
-Each test temporarily starts a server on port 3101, checks the routes, and stops the server automatically.
+`npm test` checks the Express routes. `npm run test:http` checks that the separate basic HTTP server returns `Hello`. Each test temporarily starts its server on port 3101 and then stops it automatically.
 
 ## Endpoints
 
-| Method | Path | Description | Expected status |
-| --- | --- | --- | --- |
-| GET | `/` | Returns a welcome message. | 200 OK |
-| GET | `/about` | Returns the student's name and registration number as JSON. | 200 OK |
-| GET | `/time` | Returns the server's current date and time in ISO format. | 200 OK |
-| GET | `/invalid` | Demonstrates the response for an unknown route. | 404 Not Found |
+| Method | Path | Description | Expected status | Locally verified status |
+| --- | --- | --- | --- | --- |
+| GET | `/` | Returns a welcome text message. | 200 OK | 200 OK |
+| GET | `/about` | Returns the student's name and section as JSON. | 200 OK | 200 OK |
+| GET | `/time` | Returns the server's current date and time in ISO format. | 200 OK | 200 OK |
+| GET | `/invalid` | Demonstrates the response for an unknown route. | 404 Not Found | 404 Not Found |
 
 ```text
 http://localhost:3000/
@@ -85,8 +86,29 @@ http://localhost:3000/invalid
 
 ## `package.json` and `node_modules` explained
 
-- `package.json` is the project instruction file. It tells npm which package is needed (`express`) and lists commands such as `npm start` and `npm test`.
-- `node_modules` is the large folder npm downloads after `npm install`. It is needed locally, but must **not** be uploaded to GitHub because `npm install` recreates it.
+`package.json` is the project instruction file. These are the fields used in this project:
+
+| Field | Simple explanation |
+| --- | --- |
+| `name` | The package name for this Lab 1 project. |
+| `version` | The current project version (`1.0.0`). |
+| `description` | A short explanation of the project. |
+| `main` | The primary JavaScript file (`server.js`). |
+| `scripts` | Short commands run with npm: `start` runs Express, `start:http` runs the basic HTTP server, and the two test scripts run route checks. |
+| `keywords` | Search words that describe the project. |
+| `author` | A place for author information; it is currently blank in the package file. |
+| `license` | The selected license label (`ISC`). |
+| `type` | `commonjs` allows `require()` syntax in the JavaScript files. |
+| `engines` | States that Node.js 18 or later is required. |
+| `dependencies` | Packages needed at runtime; this project needs Express. |
+
+`node_modules` is the folder npm downloads after `npm install`. Express is installed at `node_modules/express`. It is needed locally, but must **not** be uploaded to GitHub because `npm install` recreates it from `package.json` and `package-lock.json`.
+
+`package-lock.json` records the exact versions npm installed, so the same dependency tree can be installed again.
+
+## Environment variables
+
+No custom secrets or required `.env` values are used in this lab. `PORT` is optional: Render supplies it during deployment, while both servers use `3000` when it is not set locally. `.env` remains ignored by Git in case a future lab needs private settings.
 
 ## Render deployment settings
 
@@ -104,6 +126,8 @@ When this folder is inside a course repository beside `lab-02` through `lab-10`,
 For a standalone repository, leave **Root Directory** empty.
 
 ## Screenshots
+
+The image links below are correct relative paths. Because the Express `/` and `/about` responses were corrected during the final audit, **recapture `home.png` and `about.png` after the next Render deployment**. The existing `time.png` and `not-found.png` still match their current route outputs.
 
 ### Home Route
 
