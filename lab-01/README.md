@@ -6,7 +6,9 @@
 
 ## Live deployment
 
-**Render URL:** _To be added after the Render service is live and tested._
+The application is deployed on Render and is publicly accessible at:
+
+**Render URL:** [https://lab-01-node-express-05lz.onrender.com](https://lab-01-node-express-05lz.onrender.com)
 
 ## Project description
 
