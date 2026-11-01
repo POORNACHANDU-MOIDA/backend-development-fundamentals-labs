@@ -105,12 +105,21 @@ For a standalone repository, leave **Root Directory** empty.
 
 ## Screenshots
 
-Add your own screenshots after running the project. The `screenshots` folder has a checklist only; no screenshot images have been invented or added.
+### Home Route
 
-- `screenshots/home.png` - GET `/`
-- `screenshots/about.png` - GET `/about`
-- `screenshots/time.png` - GET `/time`
-- `screenshots/not-found.png` - GET `/invalid` returning 404
+![Home Route](screenshots/home.png)
+
+### About Route
+
+![About Route](screenshots/about.png)
+
+### Time Route
+
+![Time Route](screenshots/time.png)
+
+### 404 Not Found Route
+
+![404 Not Found Route](screenshots/not-found.png)
 
 ## Problems faced and solutions
 
