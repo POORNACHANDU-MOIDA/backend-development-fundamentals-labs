@@ -1,0 +1,26 @@
+{
+  "name": "lab-01-node-express-server",
+  "version": "1.0.0",
+  "description": "Backend Development Fundamentals - Lab 01",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:http": "node server-http.js",
+    "test": "node test-routes.js",
+    "test:http": "node test-routes.js server-http.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "lab"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
