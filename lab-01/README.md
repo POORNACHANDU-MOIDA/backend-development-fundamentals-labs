@@ -1,4 +1,4 @@
-# Lab 01: Node.js and Express Server
+# Lab 1: Node.js and Express server
 
 **Student:** M.POORNA CHANDU  
 **Registration Number:** 252U1R9099  
@@ -127,7 +127,7 @@ For a standalone repository, leave **Root Directory** empty.
 
 ## Screenshots
 
-The image links below are correct relative paths. Because the Express `/` and `/about` responses were corrected during the final audit, **recapture `home.png` and `about.png` after the next Render deployment**. The existing `time.png` and `not-found.png` still match their current route outputs.
+Working output screenshots of all routes running on the deployed Render server:
 
 ### Home Route
 
