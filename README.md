@@ -14,7 +14,7 @@ Course repository for Backend Development Fundamentals, Year II Term II, taught 
 | :---: | :--- | :---: | :--- |
 | Lab 1 | Node.js and Express server | [./lab-01](./lab-01) | Completed ([Live Server](https://lab-01-node-express-05lz.onrender.com)) |
 | Lab 2 | SQLite database and CRUD routes | [./lab-02](./lab-02) | In progress |
-| Lab 3 | To be added | ./lab-03 | Not started |
+| Lab 3 | REST API, query parameters, validation, debugging | [./lab-03](./lab-03) | Completed |
 | Lab 4 | To be added | ./lab-04 | Not started |
 | Lab 5 | To be added | ./lab-05 | Not started |
 | Lab 6 | To be added | ./lab-06 | Not started |

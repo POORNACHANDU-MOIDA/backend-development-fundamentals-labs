@@ -1,0 +1,401 @@
+{
+  "info": {
+    "_postman_id": "lab3-rest-api-uuid-001",
+    "name": "Lab 3 - REST API & Validation",
+    "description": "Postman Collection for Backend Development Fundamentals Lab 3: REST API, query parameters, validation, and debugging.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "createdBookId",
+      "value": "11",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. GET All Books (Default)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""]
+        },
+        "description": "Retrieve books with default query parameters (limit=10, offset=0, order_by=id ASC)."
+      },
+      "response": []
+    },
+    {
+      "name": "2. GET Search by Title (?search_q=Clean)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/?search_q=Clean",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""],
+          "query": [
+            {
+              "key": "search_q",
+              "value": "Clean"
+            }
+          ]
+        },
+        "description": "Search books with partial title matching using SQL LIKE."
+      },
+      "response": []
+    },
+    {
+      "name": "3. GET Sort by Price Descending (?order_by=price&order=DESC)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/?order_by=price&order=DESC",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""],
+          "query": [
+            {
+              "key": "order_by",
+              "value": "price"
+            },
+            {
+              "key": "order",
+              "value": "DESC"
+            }
+          ]
+        },
+        "description": "Sort books by price in descending order."
+      },
+      "response": []
+    },
+    {
+      "name": "4. GET Price Range Filter (?min_price=500&max_price=700)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/?min_price=500&max_price=700",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""],
+          "query": [
+            {
+              "key": "min_price",
+              "value": "500"
+            },
+            {
+              "key": "max_price",
+              "value": "700"
+            }
+          ]
+        },
+        "description": "Filter books whose price falls BETWEEN 500 and 700."
+      },
+      "response": []
+    },
+    {
+      "name": "5. GET Pagination (?limit=3&offset=0)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/?limit=3&offset=0",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""],
+          "query": [
+            {
+              "key": "limit",
+              "value": "3"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            }
+          ]
+        },
+        "description": "Retrieve the first page of 3 books."
+      },
+      "response": []
+    },
+    {
+      "name": "6. GET Combined Search, Filter & Sort",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/?search_q=Patterns&min_price=500&max_price=650&order_by=price&order=ASC",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""],
+          "query": [
+            {
+              "key": "search_q",
+              "value": "Patterns"
+            },
+            {
+              "key": "min_price",
+              "value": "500"
+            },
+            {
+              "key": "max_price",
+              "value": "650"
+            },
+            {
+              "key": "order_by",
+              "value": "price"
+            },
+            {
+              "key": "order",
+              "value": "ASC"
+            }
+          ]
+        },
+        "description": "Demonstrate multi-parameter query filtering."
+      },
+      "response": []
+    },
+    {
+      "name": "7. GET Invalid Price Range (400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/?min_price=900&max_price=300",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""],
+          "query": [
+            {
+              "key": "min_price",
+              "value": "900"
+            },
+            {
+              "key": "max_price",
+              "value": "300"
+            }
+          ]
+        },
+        "description": "Validation error: min_price cannot exceed max_price."
+      },
+      "response": []
+    },
+    {
+      "name": "8. GET One Book by ID (/books/1/)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/1/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "1", ""]
+        },
+        "description": "Retrieve single book by valid ID."
+      },
+      "response": []
+    },
+    {
+      "name": "9. GET Nonexistent ID (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/999/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "999", ""]
+        },
+        "description": "Returns 404 when book ID does not exist."
+      },
+      "response": []
+    },
+    {
+      "name": "10. POST Create Book (201)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json && json.bookId) {",
+              "    pm.collectionVariables.set('createdBookId', String(json.bookId));",
+              "    console.log('Saved createdBookId:', json.bookId);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Site Reliability Engineering\",\n  \"author\": \"Betsy Beyer, Chris Jones, Jennifer Petoff, Niall Richard Murphy\",\n  \"price\": 720,\n  \"pages\": 550\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""]
+        },
+        "description": "Creates a new book and dynamically binds createdBookId."
+      },
+      "response": []
+    },
+    {
+      "name": "11. POST Reject Missing Title (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"author\": \"Anonymous\",\n  \"price\": 400,\n  \"pages\": 200\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""]
+        },
+        "description": "Validation error: title is required."
+      },
+      "response": []
+    },
+    {
+      "name": "12. POST Reject Non-Numeric Price (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Invalid Book\",\n  \"author\": \"Jane Doe\",\n  \"price\": \"free\",\n  \"pages\": 100\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""]
+        },
+        "description": "Validation error: price must be a non-negative number."
+      },
+      "response": []
+    },
+    {
+      "name": "13. PUT Update Book (200)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Clean Code: A Handbook of Agile Software Craftsmanship (2nd Ed)\",\n  \"author\": \"Robert C. Martin\",\n  \"price\": 499,\n  \"pages\": 464\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/1/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "1", ""]
+        },
+        "description": "Update all fields of book 1."
+      },
+      "response": []
+    },
+    {
+      "name": "14. DELETE Book (200)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/{{createdBookId}}/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "{{createdBookId}}", ""]
+        },
+        "description": "Delete book using dynamic createdBookId."
+      },
+      "response": []
+    },
+    {
+      "name": "15. DELETE Nonexistent Book (404)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/999/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "999", ""]
+        },
+        "description": "Returns 404 when book ID does not exist."
+      },
+      "response": []
+    }
+  ]
+}
+
