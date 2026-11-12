@@ -1,7 +1,7 @@
 # Lab 2: CRUD API Route Test Results
 
 **Student:** M.POORNA CHANDU | **Reg:** 252U1R9099 | **Section:** CSE-GEN AI -2B
-**Date:** 2026-11-03T14:19:58.370Z
+**Date:** 2026-11-12T08:56:06.838Z
 
 ## Test Summary
 
@@ -36,9 +36,9 @@ Content-Type: application/json; charset=utf-8
 [
   {
     "id": 1,
-    "title": "Clean Code",
+    "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
     "author": "Robert C. Martin",
-    "price": 450,
+    "price": 499,
     "pages": 464
   },
   {
@@ -121,9 +121,9 @@ Content-Type: application/json; charset=utf-8
 
 {
   "id": 1,
-  "title": "Clean Code",
+  "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
   "author": "Robert C. Martin",
-  "price": 450,
+  "price": 499,
   "pages": 464
 }
 ```

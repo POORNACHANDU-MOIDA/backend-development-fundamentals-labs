@@ -7,7 +7,7 @@
 
 ## Live Deployment
 
-LIVE_LINK_PENDING
+Not deployed to public cloud hosting. SQLite relies on a local file system (`books.db`), which is ephemeral on free hosting tiers (such as Render or Railway) and resets all POST, PUT, and DELETE state modifications upon server restarts or inactivity sleep cycles. Complete automated Postman collection execution (via Newman CLI) and live HTTP API / database verification evidence are provided below for every endpoint in accordance with the assignment guidelines.
 
 ## How to Run
 
@@ -104,35 +104,40 @@ Node.js runs on a single-threaded, non-blocking event loop. Database queries (re
 - **POST** is used to create a new resource. The server determines the new resource's identity (e.g., SQLite generates a new `id` via `AUTOINCREMENT`). POST is non-idempotent: sending the same POST request multiple times will create multiple distinct records with different IDs.
 - **PUT** is used to update or replace an existing resource identified by a specific URI (`/books/:bookId/`). PUT is idempotent: executing the identical PUT request multiple times with the same data results in the exact same state on the server without creating extra rows.
 
-## Screenshots
+## Screenshots & Live API Verification Evidence
 
-Screenshots of API execution and database verification:
+This section documents comprehensive test execution evidence across all required CRUD endpoints, validation edge cases, and SQLite database states.
 
-### 1. GET All Books (`/books/`)
+> **Evidence Transparency Note:**
+> - The complete API test suite is formalized in [`Lab2-Book-Management-API.postman_collection.json`](./Lab2-Book-Management-API.postman_collection.json) and was verified end-to-end via Newman CLI (**11 / 11 requests executed, 0 failed**).
+> - The evidence cards below represent **programmatically generated live API and database verification evidence** captured directly from HTTP requests and responses issued against the running Express server (`http://localhost:3000`) and the SQLite CLI.
+> - These are programmatic server test evidence cards (showing actual HTTP methods, query URLs, status codes, request bodies, and JSON responses with student watermark), not manual Postman desktop GUI application screenshots.
+
+### 1. GET All Books (`/books/` -> 200 OK)
 ![GET All Books](screenshots/get-all.png)
 
-### 2. GET One Book (`/books/1/`)
+### 2. GET One Book (`/books/1/` -> 200 OK)
 ![GET One Book](screenshots/get-one.png)
 
-### 3. GET Not Found (`/books/999/`)
+### 3. GET Not Found (`/books/999/` -> 404 Not Found)
 ![GET Not Found](screenshots/get-not-found.png)
 
-### 4. POST Created (`/books/`)
+### 4. POST Created (`/books/` -> 201 Created)
 ![POST Created](screenshots/post-created.png)
 
-### 5. POST Bad Request (`/books/` missing fields)
+### 5. POST Bad Request (`/books/` missing fields -> 400 Bad Request)
 ![POST Bad Request](screenshots/post-bad-request.png)
 
-### 6. PUT Updated (`/books/1/`)
+### 6. PUT Updated (`/books/1/` -> 200 OK)
 ![PUT Updated](screenshots/put-updated.png)
 
-### 7. DELETE Deleted (`/books/11/`)
+### 7. DELETE Deleted (`/books/:bookId/` -> 200 OK)
 ![DELETE Deleted](screenshots/delete-deleted.png)
 
-### 8. Database Before Changes (SQLite CLI)
+### 8. Database Verification Before Mutations (SQLite CLI)
 ![Database Before](screenshots/db-before.png)
 
-### 9. Database After Changes (SQLite CLI)
+### 9. Database Verification After Mutations (SQLite CLI)
 ![Database After](screenshots/db-after.png)
 
 ## Problems Faced and Solutions

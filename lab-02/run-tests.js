@@ -171,12 +171,25 @@ async function run() {
   markdown += `| :-: | :--- | :---: | :--- | :---: | :---: | :---: |\n`;
 
   const results = [];
+  let dynamicCreatedId = null;
 
   for (let i = 0; i < tests.length; i++) {
     const t = tests[i];
+    if (t.name.includes("DELETE valid book ID") && dynamicCreatedId) {
+      t.path = `/books/${dynamicCreatedId}/`;
+      t.curl = `curl -i -X DELETE http://localhost:3000/books/${dynamicCreatedId}/`;
+    }
     console.log(`Testing [${i + 1}/${tests.length}] ${t.name}...`);
     try {
       const res = await sendRequest(t.method, t.path, t.data);
+      if (t.name.includes("POST valid book") && res.statusCode === 201) {
+        try {
+          const bodyObj = JSON.parse(res.body);
+          if (bodyObj && bodyObj.bookId) {
+            dynamicCreatedId = bodyObj.bookId;
+          }
+        } catch (e) {}
+      }
       const passed =
         (t.name.includes("200") && res.statusCode === 200) ||
         (t.name.includes("201") && res.statusCode === 201) ||

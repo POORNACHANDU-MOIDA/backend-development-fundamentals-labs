@@ -1,0 +1,268 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Lab 2 - Book Management API",
+    "description": "Postman Collection for Backend Development Fundamentals Lab 2: SQLite database and CRUD routes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "createdBookId",
+      "value": "11",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. GET All Books",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""]
+        },
+        "description": "Retrieve the complete list of books from SQLite database."
+      },
+      "response": []
+    },
+    {
+      "name": "2. GET One Book by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/1/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "1", ""]
+        },
+        "description": "Retrieve book with ID 1."
+      },
+      "response": []
+    },
+    {
+      "name": "3. GET One Book - Nonexistent ID (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/999/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "999", ""]
+        },
+        "description": "Attempt to retrieve non-existent book ID 999 (should return 404 Not Found)."
+      },
+      "response": []
+    },
+    {
+      "name": "4. GET One Book - Invalid ID (400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/abc/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "abc", ""]
+        },
+        "description": "Attempt to query with non-integer ID 'abc' (should return 400 Bad Request)."
+      },
+      "response": []
+    },
+    {
+      "name": "5. GET One Book - SQL Injection Attempt (400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/1%20OR%201=1/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "1%20OR%201=1", ""]
+        },
+        "description": "Security test with SQL injection payload (should return 400 Bad Request)."
+      },
+      "response": []
+    },
+    {
+      "name": "6. POST Create Book (201)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const responseData = pm.response.json();",
+              "if (responseData && responseData.bookId) {",
+              "    pm.collectionVariables.set('createdBookId', String(responseData.bookId));",
+              "    console.log('Saved createdBookId:', responseData.bookId);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Structure and Interpretation of Computer Programs\",\n  \"author\": \"Harold Abelson and Gerald Jay Sussman\",\n  \"price\": 650,\n  \"pages\": 657\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""]
+        },
+        "description": "Insert a new book record into the database. Dynamically saves the returned bookId into collection variable createdBookId."
+      },
+      "response": []
+    },
+    {
+      "name": "7. POST Invalid Data - Missing Fields (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Incomplete Book Without Author or Price\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", ""]
+        },
+        "description": "Validation test: submit incomplete body (should return 400 Bad Request)."
+      },
+      "response": []
+    },
+    {
+      "name": "8. PUT Update Book (200)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Clean Code: A Handbook of Agile Software Craftsmanship\",\n  \"author\": \"Robert C. Martin\",\n  \"price\": 499,\n  \"pages\": 464\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/1/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "1", ""]
+        },
+        "description": "Update all fields of book with ID 1 (should return 200 OK)."
+      },
+      "response": []
+    },
+    {
+      "name": "9. PUT Nonexistent Book (404)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Ghost Book\",\n  \"author\": \"Ghost Writer\",\n  \"price\": 250,\n  \"pages\": 150\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/books/999/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "999", ""]
+        },
+        "description": "Update non-existent book ID 999 (should return 404 Not Found)."
+      },
+      "response": []
+    },
+    {
+      "name": "10. DELETE Book (200)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/{{createdBookId}}/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "{{createdBookId}}", ""]
+        },
+        "description": "Delete the newly created book using the dynamic {{createdBookId}} captured from the POST response."
+      },
+      "response": []
+    },
+    {
+      "name": "11. DELETE Nonexistent Book (404)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/books/999/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["books", "999", ""]
+        },
+        "description": "Attempt to delete nonexistent book ID 999 (should return 404 Not Found)."
+      },
+      "response": []
+    }
+  ]
+}
